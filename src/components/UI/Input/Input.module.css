@@ -1,0 +1,26 @@
+::-webkit-input-placeholder {
+  color: #565f79;
+  padding-left: 6px;
+}
+
+.input-element {
+  display: block;
+  margin: 20px auto;
+  background: #262e49;
+  border: 0;
+  border-radius: 5px;
+  padding: 14px 10px;
+  width: 320px;
+  outline: none;
+  color: var(--color-text);
+  -webkit-transition: all 0.2s ease-out;
+  -moz-transition: all 0.2s ease-out;
+  -ms-transition: all 0.2s ease-out;
+  -o-transition: all 0.2s ease-out;
+  transition: all 0.2s ease-out;
+}
+
+input[type="text"]:focus,
+input[type="password"]:focus {
+  border: 1px solid var(--color-primary);
+}

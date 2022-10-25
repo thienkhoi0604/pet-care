@@ -1,0 +1,106 @@
+input:-webkit-autofill,
+input:-webkit-autofill:focus {
+  transition: background-color 600000s 0s, color 600000s 0s;
+}
+
+.form-signup {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+}
+
+.form-container {
+  /* composes: form-container from "../Login/Login.module.css"; */
+  position: absolute;
+  margin: 0;
+  top: 50px;
+  left: 50%;
+  transform: translateX(-50%);
+  text-align: center;
+  background-color: rgb(33, 41, 66);
+  border-radius: 9px;
+  width: 800px;
+  height: 580px;
+  box-shadow: 1px 1px 100px 18px rgb(25, 31, 53);
+}
+
+.form-container img {
+  position: absolute;
+  width: 50%;
+  height: 100%;
+  left: 0;
+  border-radius: 9px 0px 0px 9px;
+}
+
+.form-input-signup {
+  position: absolute;
+  width: 50%;
+  height: 100%;
+  right: 0;
+}
+
+.form-input-signup h3 {
+  font-family: "Source Sans Pro", sans-serif;
+  color: #5c6bc0;
+  font-size: 18px;
+  margin-top: 40px;
+  cursor: default;
+}
+
+.form-input-signup h5 {
+  font-family: "Source Sans Pro", sans-serif;
+  font-size: 13px;
+  color: #a1a4ad;
+  letter-spacing: 1.5px;
+  margin-bottom: 40px;
+  cursor: default;
+}
+
+.form-input-signup .btn {
+  position: absolute;
+  left: 50%;
+  bottom: 6%;
+  transform: translateX(-50%);
+}
+
+.input-select {
+  display: block;
+  margin: 20px auto;
+  background: #262e49;
+  border: 0;
+  border-radius: 5px;
+  padding: 14px 10px;
+  width: 340px;
+  outline: none;
+  color: #565f79;
+  -webkit-transition: all 0.2s ease-out;
+  -moz-transition: all 0.2s ease-out;
+  -ms-transition: all 0.2s ease-out;
+  -o-transition: all 0.2s ease-out;
+  transition: all 0.2s ease-out;
+}
+
+.birthday-picker {
+  display: block;
+  margin: 0px auto;
+  background: #262e49;
+  border: 0;
+  border-radius: 5px;
+  padding: 14px 10px;
+  width: 320px;
+  outline: none;
+  color: #d6d6d6;
+  -webkit-transition: all 0.2s ease-out;
+  -moz-transition: all 0.2s ease-out;
+  -ms-transition: all 0.2s ease-out;
+  -o-transition: all 0.2s ease-out;
+  transition: all 0.2s ease-out;
+}
+
+.calendar-icon {
+  position: absolute;
+  left: 340px;
+  top: 214px;
+  color: var(--color-icon);
+  cursor: pointer;
+}
