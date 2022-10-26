@@ -21,3 +21,14 @@
   bottom: 10%;
   transform: translateX(-50%);
 }
+
+.btn.btn-signup {
+  position: absolute;
+  left: 50%;
+  bottom: 10%;
+  transform: translateX(-50%);
+}
+
+.btn.btn-logout {
+  margin-top: 20px;
+}

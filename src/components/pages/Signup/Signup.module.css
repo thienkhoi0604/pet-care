@@ -43,7 +43,7 @@ input:-webkit-autofill:focus {
   font-family: "Source Sans Pro", sans-serif;
   color: #5c6bc0;
   font-size: 18px;
-  margin-top: 40px;
+  margin-top: 30px;
   cursor: default;
 }
 
@@ -52,18 +52,31 @@ input:-webkit-autofill:focus {
   font-size: 13px;
   color: #a1a4ad;
   letter-spacing: 1.5px;
-  margin-bottom: 40px;
+  margin-bottom: 60px;
   cursor: default;
 }
 
+.form-input-signup .error {
+  text-align: center;
+  height: 20px;
+  padding: 2px;
+  margin: 10px auto;
+  position: absolute;
+  top: 18%;
+  left: 8%;
+  color: red;
+  display: none;
+}
+/* 
+Don't need
 .form-input-signup .btn {
   position: absolute;
   left: 50%;
   bottom: 6%;
   transform: translateX(-50%);
-}
+} */
 
-.input-select {
+/* .input-select {
   display: block;
   margin: 20px auto;
   background: #262e49;
@@ -78,6 +91,10 @@ input:-webkit-autofill:focus {
   -ms-transition: all 0.2s ease-out;
   -o-transition: all 0.2s ease-out;
   transition: all 0.2s ease-out;
+}
+
+.input-select.selected {
+  color: var(--color-text);
 }
 
 .birthday-picker {
@@ -100,7 +117,18 @@ input:-webkit-autofill:focus {
 .calendar-icon {
   position: absolute;
   left: 340px;
-  top: 214px;
+  top: 332px;
   color: var(--color-icon);
   cursor: pointer;
+} */
+
+.invalid-repeat {
+  border: 1px solid red;
+}
+
+.form-input-signup .back-login {
+  position: absolute;
+  left: 26%;
+  bottom: 6%;
+  color: var(--color-primary);
 }

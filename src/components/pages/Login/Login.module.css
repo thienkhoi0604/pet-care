@@ -35,11 +35,22 @@
   cursor: default;
 }
 
+.form-container .error {
+  text-align: center;
+  height: 20px;
+  padding: 2px;
+  margin: 10px auto;
+  position: absolute;
+  top: 28%;
+  left: 8%;
+  color: red;
+}
+/* 
 .form-container .savepass {
   position: absolute;
   float: left;
   left: 30px;
-}
+} */
 
 .form-container .savepass .remember {
   position: relative;
