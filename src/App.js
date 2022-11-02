@@ -7,28 +7,46 @@ import HomePage from "./components/pages/Home/Home";
 import { Routes, Route, BrowserRouter, Navigate } from "react-router-dom";
 import { useState, useEffect } from "react";
 import axios from "axios";
+import { useQuery } from "@tanstack/react-query";
 
 function App() {
   const [isLogin, setIsLogin] = useState(false);
   const [usersList, setUsersList] = useState([]);
+  const { isLoading, error } = useQuery({
+    queryKey: ["repoUsers"],
+    queryFn: () => {
+      const url = "http://localhost:3001/";
+      const fetchData = async () => {
+        try {
+          await axios.get(url).then((res) => setUsersList(res.data));
+        } catch (error) {
+          console.log("error", error);
+        }
+      };
 
-  useEffect(() => {
-    const url = "http://localhost:3001/";
-    const fetchData = async () => {
-      try {
-        const result = await axios.get(url);
-        setUsersList(result.data);
-      } catch (error) {
-        console.log("error", error);
-      }
-    };
+      fetchData();
+    },
+  });
 
-    fetchData();
-  }, []);
+  // useEffect(() => {
+  //   const url = "http://localhost:3001/";
+  //   const fetchData = async () => {
+  //     try {
+  //       const result = await axios.get(url);
+  //       setUsersList(result.data);
+  //     } catch (error) {
+  //       console.log("error", error);
+  //     }
+  //   };
+
+  //   fetchData();
+  // }, []);
 
   const onChangeLogin = (value) => {
     setIsLogin(value);
   };
+
+  if (isLoading) return "Loading";
 
   return (
     <BrowserRouter>

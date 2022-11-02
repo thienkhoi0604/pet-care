@@ -81,7 +81,10 @@ const Login = ({ usersList, onLogin, className }) => {
   const checkUserSignin = (username, password) => {
     return (
       usersList.filter((item) => {
-        if (item.email === username && item.password === password) {
+        if (
+          item.email.trim() === username &&
+          item.password.trim() === password
+        ) {
           return true;
         } else {
           return false;
@@ -97,14 +100,15 @@ const Login = ({ usersList, onLogin, className }) => {
         <h5>Sign in your account</h5>
         <span className={classes["error"]} id="message"></span>
         <Input
-          type="text"
           id="username"
           name="username"
+          type="text"
           placeholder="Email"
           value={username}
           onChange={(e) => {
             return onChangeUsernameHandler(e.target.value);
           }}
+          required
         />
         <Input
           id="password"

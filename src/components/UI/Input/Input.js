@@ -1,12 +1,14 @@
 import classes from "./Input.module.css";
 
-const Input = (props) => {
+const Input = ({ ...rest }) => {
   return (
-    <input
-      className={`${classes["input-element"]} ${classes[props.className]}`}
-      type={props.type || "text"}
-      {...props}
-    />
+    <>
+      <input
+        className={`${classes["input-element"]} ${classes[rest.className]}`}
+        type={rest.type || "text"}
+        {...rest}
+      />
+    </>
   );
 };
 

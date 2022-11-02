@@ -34,7 +34,6 @@ const BasicTable = ({ data }) => {
         <TableHead>
           <TableRow>
             <StyledTableCell>Email</StyledTableCell>
-            <StyledTableCell align="right">Password</StyledTableCell>
             <StyledTableCell align="right">Fullname</StyledTableCell>
             <StyledTableCell align="right">Telephone</StyledTableCell>
           </TableRow>
@@ -48,7 +47,6 @@ const BasicTable = ({ data }) => {
               <StyledTableCell component="th" scope="row">
                 {row.email}
               </StyledTableCell>
-              <StyledTableCell align="right">{row.password}</StyledTableCell>
               <StyledTableCell align="right">{row.fullname}</StyledTableCell>
               <StyledTableCell align="right">{row.telephone}</StyledTableCell>
             </StyledTableRow>
