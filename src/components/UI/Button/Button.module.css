@@ -17,8 +17,8 @@
 
 .btn.btn-form {
   position: absolute;
+  margin-top: 36px;
   left: 50%;
-  bottom: 10%;
   transform: translateX(-50%);
 }
 
@@ -30,5 +30,23 @@
 }
 
 .btn.btn-logout {
-  margin-top: 20px;
+  margin: 20px;
+}
+
+.btn.btn-new-group {
+  width: 150px;
+  height: 50px;
+  margin: 10px;
+  margin-top: 50px;
+}
+
+.btn-list-group {
+  float: left;
+  margin-top: 50px;
+  margin-left: 50px;
+  z-index: 4;
+}
+.btn-list-group:hover {
+  background: #5d33e6;
+  cursor: pointer;
 }

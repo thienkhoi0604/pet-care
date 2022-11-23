@@ -1,0 +1,14 @@
+.homepage-container {
+  position: absolute;
+  width: 100%;
+  text-align: center;
+}
+
+.title-table {
+  margin-top: 100px;
+}
+
+.create-group {
+  text-decoration: none;
+  color: #dfdeee;
+}

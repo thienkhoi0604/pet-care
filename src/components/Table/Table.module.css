@@ -1,0 +1,8 @@
+.table-container {
+  width: 800px !important;
+  height: fit-content;
+  margin-left: 50%;
+  transform: translateX(-50%);
+  border: 1px solid var(--color-primary);
+  background-color: #acb4c9;
+}

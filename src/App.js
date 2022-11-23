@@ -3,86 +3,78 @@ import Login from "./components/pages/Login/Login";
 import NotFound from "./components/pages/NotFound/NotFound";
 import Signup from "./components/pages/Signup/Signup";
 import HomePage from "./components/pages/Home/Home";
+import ListGroup from "./components/ListGroup/ListGroup";
 
 import { Routes, Route, BrowserRouter, Navigate } from "react-router-dom";
-import { useState, useEffect } from "react";
-import axios from "axios";
+import { useEffect, useState } from "react";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import CreateGroup from "./components/CreateGroup/CreateGroup";
 import { useQuery } from "@tanstack/react-query";
+import axios from "axios";
+
+const queryClient = new QueryClient();
 
 function App() {
   const [isLogin, setIsLogin] = useState(false);
-  const [usersList, setUsersList] = useState([]);
-  const { isLoading, error } = useQuery({
-    queryKey: ["repoUsers"],
-    queryFn: () => {
-      const url = "http://localhost:3001/";
-      const fetchData = async () => {
-        try {
-          await axios.get(url).then((res) => setUsersList(res.data));
-        } catch (error) {
-          console.log("error", error);
-        }
-      };
+  const [user, setUser] = useState("");
+  const [userList, setUserList] = useState([]);
 
-      fetchData();
-    },
-  });
-
-  // useEffect(() => {
-  //   const url = "http://localhost:3001/";
-  //   const fetchData = async () => {
-  //     try {
-  //       const result = await axios.get(url);
-  //       setUsersList(result.data);
-  //     } catch (error) {
-  //       console.log("error", error);
-  //     }
-  //   };
-
-  //   fetchData();
-  // }, []);
+  useEffect(() => {
+    const url = "http://localhost:3001/";
+    const result = axios.get(url).then((res) => setUserList(res.data));
+    console.log(result);
+  }, []);
 
   const onChangeLogin = (value) => {
     setIsLogin(value);
   };
+  const getUser = (user) => {
+    setUser(user);
+  };
 
-  if (isLoading) return "Loading";
-
+  console.log(user);
   return (
-    <BrowserRouter>
-      <div className="App">
-        <Routes>
-          <Route
-            path="/signup"
-            element={
-              !isLogin ? (
-                <Signup onLogin={onChangeLogin} />
-              ) : (
-                <Navigate to="/" />
-              )
-            }
-          />
-          {!isLogin ? (
+    <QueryClientProvider client={queryClient}>
+      <BrowserRouter>
+        <div className="App">
+          <Routes>
             <Route
-              exact
-              path="/"
-              element={<Login usersList={usersList} onLogin={onChangeLogin} />}
+              path="/signup"
+              element={
+                !isLogin ? (
+                  <Signup getUser={getUser} onLogin={onChangeLogin} />
+                ) : (
+                  <Navigate to="/" />
+                )
+              }
             />
-          ) : (
-            <Route
-              exact
-              path="/"
-              element={<HomePage users={usersList} onLogout={onChangeLogin} />}
-            />
-          )}
+            <Route path="/newgroup" element={<CreateGroup />} />
+            <Route path="/list" element={<ListGroup />} />
+            {!isLogin ? (
+              <Route
+                exact
+                path="/"
+                element={<Login getUser={getUser} onLogin={onChangeLogin} />}
+              />
+            ) : (
+              <Route
+                exact
+                path="/"
+                element={
+                  <HomePage
+                    usersList={userList}
+                    user={user}
+                    onLogout={onChangeLogin}
+                  />
+                }
+              />
+            )}
 
-          <Route path="*" element={<NotFound />} />
-        </Routes>
-        {/* <Login /> */}
-        {/* <Signup /> */}
-        {/* <NotFound /> */}
-      </div>
-    </BrowserRouter>
+            <Route path="*" element={<NotFound />} />
+          </Routes>
+        </div>
+      </BrowserRouter>
+    </QueryClientProvider>
   );
 }
 

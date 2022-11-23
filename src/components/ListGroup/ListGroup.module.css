@@ -1,0 +1,11 @@
+.list-group {
+  position: absolute;
+  width: 800px;
+  text-align: center;
+  top: 100px;
+}
+
+.list-group-content {
+  position: absolute;
+  width: 100%;
+}

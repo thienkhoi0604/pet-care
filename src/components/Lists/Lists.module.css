@@ -1,0 +1,12 @@
+.list-container {
+  width: 800px;
+  height: fit-content;
+  margin-right: 500px;
+  transform: translateX(+50%);
+  border: 1px solid var(--color-primary);
+  background-color: #acb4c9;
+}
+
+.list-item:hover {
+  cursor: pointer;
+}

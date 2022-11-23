@@ -4,12 +4,27 @@ import Input from "../../UI/Input/Input";
 
 import { useEffect, useRef, useState } from "react";
 import VisibilityOutlinedIcon from "@mui/icons-material/VisibilityOutlined";
+import GoogleIcon from "@mui/icons-material/Google";
+import FacebookIcon from "@mui/icons-material/Facebook";
 import { Link } from "react-router-dom";
+import { useQuery } from "@tanstack/react-query";
+import axios from "axios";
+import { GoogleLogin } from "react-google-login";
+import { gapi } from "gapi-script";
+import FacebookLogin from "react-facebook-login/dist/facebook-login-render-props";
 
-const Login = ({ usersList, onLogin, className }) => {
+const Login = ({ getUser, onLogin, className }) => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
-  // const [isChecked, setIsChecked] = useState(false);
+
+  const { isLoading, error, data } = useQuery({
+    queryKey: ["repoUsers"],
+    queryFn: async () => {
+      const url = "http://localhost:3001/";
+      const { data } = await axios.get(url);
+      return data;
+    },
+  });
 
   const showPassRef = useRef();
 
@@ -24,12 +39,27 @@ const Login = ({ usersList, onLogin, className }) => {
       pwd.type === "password" ? (pwd.type = "text") : (pwd.type = "password");
     };
 
-    showPasswordCopyRef.addEventListener("click", showPasswordHandler);
+    if (showPasswordCopyRef) {
+      showPasswordCopyRef.addEventListener("click", showPasswordHandler);
+    }
 
     return () => {
-      showPasswordCopyRef.removeEventListener("click", showPasswordHandler);
+      if (showPasswordCopyRef) {
+        showPasswordCopyRef.removeEventListener("click", showPasswordHandler);
+      }
       showPassRef.current = showPasswordCopyRef;
     };
+  });
+
+  useEffect(() => {
+    const initClient = () => {
+      gapi.client.init({
+        clientId:
+          "1075405924633-q1po2rp7dbj1falchd32gfoe207koq07.apps.googleusercontent.com",
+        scope: "profile",
+      });
+    };
+    gapi.load("client:auth2", initClient);
   });
 
   const onChangeUsernameHandler = (value) => {
@@ -40,10 +70,6 @@ const Login = ({ usersList, onLogin, className }) => {
     setPassword(value);
   };
 
-  // const onChangeSavePasswordHandler = (value) => {
-  //   setIsChecked(value);
-  // };
-
   const onSubmitHandler = (event) => {
     event.preventDefault();
 
@@ -52,6 +78,7 @@ const Login = ({ usersList, onLogin, className }) => {
       checkUserSignin(username, password)
     ) {
       console.log("Login success");
+      getUser(username);
       onLogin(true);
     } else {
       console.log("Something went wrong");
@@ -80,7 +107,7 @@ const Login = ({ usersList, onLogin, className }) => {
 
   const checkUserSignin = (username, password) => {
     return (
-      usersList.filter((item) => {
+      data.filter((item) => {
         if (
           item.email.trim() === username &&
           item.password.trim() === password
@@ -93,9 +120,39 @@ const Login = ({ usersList, onLogin, className }) => {
     );
   };
 
+  const responseGoogle = async (response) => {
+    try {
+      const res = await axios.post("http://localhost:3001/googlelogin", {
+        tokenId: response.tokenId,
+      });
+      getUser(res.data.user);
+      onLogin(true);
+    } catch (err) {
+      console.log("connect google fail: ", err);
+    }
+  };
+
+  const responseFacebook = async (response) => {
+    try {
+      const { accessToken, userID } = response;
+      const res = await axios.post("http://localhost:3001/facebooklogin", {
+        accessToken,
+        userID,
+      });
+      getUser(res.data.user);
+      onLogin(true);
+    } catch (err) {
+      err.response.data.msg && console.log("connect facebook fail: ", err);
+    }
+  };
+
+  if (isLoading) return "Loading";
+
+  if (error) return "An error has occurred: " + error.message;
+
   return (
     <div className={`${classes["form-login"]} ${className}`}>
-      <form className={classes["form-container"]}>
+      <form className={classes["form-container"]} onSubmit={onSubmitHandler}>
         <h3>LOGIN</h3>
         <h5>Sign in your account</h5>
         <span className={classes["error"]} id="message"></span>
@@ -125,21 +182,7 @@ const Login = ({ usersList, onLogin, className }) => {
           className={classes["visibility-password"]}
           ref={showPassRef}
         />
-        {/* <label>
-          <div className={classes["savepass"]}>
-            <Input
-              type="checkbox"
-              name="savepassword"
-              placeholder=""
-              className={{}}
-              checked={isChecked}
-              onChange={(e) => {
-                return onChangeSavePasswordHandler(e.target.checked);
-              }}
-            />
-            <span className={classes["remember"]}>Remember password</span>
-          </div>
-        </label> */}
+
         <Link to="not-found" className={classes["forgetpass"]}>
           Forget Password?
         </Link>
@@ -149,6 +192,37 @@ const Login = ({ usersList, onLogin, className }) => {
         <Link to="/signup" className={classes["create"]}>
           Don't have an account? Sign up
         </Link>
+        <div className={classes["social-media"]}>
+          <h4 className={classes["social-media-title"]}>Login with </h4>
+          <GoogleLogin
+            clientId="658977310896-knrl3gka66fldh83dao2rhgbblmd4un9.apps.googleusercontent.com"
+            render={(renderProps) => (
+              <button
+                onClick={renderProps.onClick}
+                className={classes["social-btn"]}
+              >
+                <GoogleIcon />
+              </button>
+            )}
+            buttonText="Login"
+            onSuccess={responseGoogle}
+          />
+          <FacebookLogin
+            appId="1424063898122804"
+            autoLoad={false}
+            fields="name,email,picture"
+            // onClick={componentClicked}
+            callback={responseFacebook}
+            render={(renderProps) => (
+              <button
+                onClick={renderProps.onClick}
+                className={classes["social-btn"]}
+              >
+                <FacebookIcon />
+              </button>
+            )}
+          />
+        </div>
       </form>
     </div>
   );

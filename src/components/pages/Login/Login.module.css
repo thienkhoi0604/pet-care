@@ -45,12 +45,6 @@
   left: 8%;
   color: red;
 }
-/* 
-.form-container .savepass {
-  position: absolute;
-  float: left;
-  left: 30px;
-} */
 
 .form-container .savepass .remember {
   position: relative;
@@ -74,8 +68,8 @@
 
 .form-container .create {
   position: absolute;
+  margin-top: 88px;
   left: 22%;
-  bottom: 6%;
   color: var(--color-primary);
 }
 
@@ -95,4 +89,30 @@
 
 .form-container .visibility-password.active {
   color: var(--color-primary);
+}
+
+.social-media {
+  position: absolute;
+  margin-top: 130px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 100%;
+}
+
+.social-media-title {
+  display: inline;
+  color: var(--color-text);
+}
+
+.social-btn {
+  width: 60px;
+  height: 60px;
+  background-color: #4285f4;
+  border: none;
+  border-radius: 20px;
+  margin: 10px;
+}
+
+.social-btn:hover {
+  cursor: pointer;
 }
