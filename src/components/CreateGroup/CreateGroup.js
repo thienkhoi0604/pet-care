@@ -3,15 +3,18 @@ import classes from "./CreateGroup.module.css";
 import Input from "../UI/Input/Input";
 import Button from "../UI/Button/Button";
 
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useState } from "react";
 import axios from "axios";
 import { useMutation } from "@tanstack/react-query";
-import { Navigate } from "react-router-dom";
 
 const CreateGroup = ({ className }) => {
+  const navigate = useNavigate();
   const [name, setName] = useState("");
-  const [flag, setFlag] = useState(false);
+
+  // const handlerNavigate = () => {
+  //   navigate("/");
+  // };
 
   const postGroup = async () => {
     const url = "http://localhost:3001/newgroup";
@@ -19,6 +22,7 @@ const CreateGroup = ({ className }) => {
       await axios
         .post(url, {
           name,
+          user: localStorage.getItem("user"),
         })
         .then((res) => {
           if (res.status >= 200 && res.status < 300) {
@@ -37,11 +41,10 @@ const CreateGroup = ({ className }) => {
     console.log(name);
     mutation.mutate({});
     setName("");
-    setFlag(true);
+    navigate("/");
   };
   return (
     <div className={`${classesForm["form-login"]} ${className}`}>
-      {flag && <Navigate to="/list" replace={true} />}
       <form
         className={`${classesForm["form-container"]} ${classes["create-group-container"]}`}
         onSubmit={onSubmitHandler}

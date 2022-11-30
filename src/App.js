@@ -3,14 +3,15 @@ import Login from "./components/pages/Login/Login";
 import NotFound from "./components/pages/NotFound/NotFound";
 import Signup from "./components/pages/Signup/Signup";
 import HomePage from "./components/pages/Home/Home";
-import ListGroup from "./components/ListGroup/ListGroup";
 
 import { Routes, Route, BrowserRouter, Navigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import CreateGroup from "./components/CreateGroup/CreateGroup";
-import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
+import DetailGroup from "./components/pages/DetailGroup/DetailGroup";
+import ConfirmMessage from "./components/ConfirmMessage/ConfirmMessage";
+import SuccessMessage from "./components/SuccessMessage/SuccessMessage";
 
 const queryClient = new QueryClient();
 
@@ -49,7 +50,12 @@ function App() {
               }
             />
             <Route path="/newgroup" element={<CreateGroup />} />
-            <Route path="/list" element={<ListGroup />} />
+            <Route
+              path="/:idGroup"
+              element={<DetailGroup usersList={userList} />}
+            />
+            <Route path="/:idGroup/:token" element={<ConfirmMessage />} />
+            <Route path="/crud/:token" element={<SuccessMessage />} />
             {!isLogin ? (
               <Route
                 exact
@@ -60,13 +66,7 @@ function App() {
               <Route
                 exact
                 path="/"
-                element={
-                  <HomePage
-                    usersList={userList}
-                    user={user}
-                    onLogout={onChangeLogin}
-                  />
-                }
+                element={<HomePage user={user} onLogout={onChangeLogin} />}
               />
             )}
 

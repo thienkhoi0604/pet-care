@@ -5,7 +5,7 @@ import Button from "../../UI/Button/Button";
 
 import "react-datepicker/dist/react-datepicker.css";
 import axios from "axios";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useMutation } from "@tanstack/react-query";
 
 const Signup = ({ getUser, onLogin }) => {
@@ -14,6 +14,8 @@ const Signup = ({ getUser, onLogin }) => {
   const [repeatPassword, setRepeatPassword] = useState("");
   const [name, setName] = useState("");
   const [phone, setPhone] = useState("");
+
+  const navigate = useNavigate();
 
   const postData = async () => {
     const url = "http://localhost:3001/crud";
@@ -30,7 +32,7 @@ const Signup = ({ getUser, onLogin }) => {
             alert("Sign up success");
             console.log("response: ", res);
             getUser(email);
-            onLogin(true);
+            navigate("/");
           }
         });
     } catch (error) {

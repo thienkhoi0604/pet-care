@@ -9,7 +9,7 @@ import FacebookIcon from "@mui/icons-material/Facebook";
 import { Link } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
-import { GoogleLogin } from "react-google-login";
+import GoogleLogin from "react-google-login";
 import { gapi } from "gapi-script";
 import FacebookLogin from "react-facebook-login/dist/facebook-login-render-props";
 
@@ -55,7 +55,7 @@ const Login = ({ getUser, onLogin, className }) => {
     const initClient = () => {
       gapi.client.init({
         clientId:
-          "1075405924633-q1po2rp7dbj1falchd32gfoe207koq07.apps.googleusercontent.com",
+          "1059448371288-vol44jdsvkfc0d1b96puhukpd35fv0c3.apps.googleusercontent.com",
         scope: "profile",
       });
     };
@@ -80,6 +80,9 @@ const Login = ({ getUser, onLogin, className }) => {
       console.log("Login success");
       getUser(username);
       onLogin(true);
+
+      localStorage.clear();
+      localStorage.setItem("user", username);
     } else {
       console.log("Something went wrong");
     }
@@ -121,11 +124,15 @@ const Login = ({ getUser, onLogin, className }) => {
   };
 
   const responseGoogle = async (response) => {
+    console.log("responseGoogle");
     try {
       const res = await axios.post("http://localhost:3001/googlelogin", {
         tokenId: response.tokenId,
       });
+
       getUser(res.data.user);
+      localStorage.clear();
+      localStorage.setItem("user", res.data.user);
       onLogin(true);
     } catch (err) {
       console.log("connect google fail: ", err);
@@ -140,6 +147,9 @@ const Login = ({ getUser, onLogin, className }) => {
         userID,
       });
       getUser(res.data.user);
+
+      localStorage.clear();
+      localStorage.setItem("user", res.data.user);
       onLogin(true);
     } catch (err) {
       err.response.data.msg && console.log("connect facebook fail: ", err);
@@ -195,7 +205,7 @@ const Login = ({ getUser, onLogin, className }) => {
         <div className={classes["social-media"]}>
           <h4 className={classes["social-media-title"]}>Login with </h4>
           <GoogleLogin
-            clientId="658977310896-knrl3gka66fldh83dao2rhgbblmd4un9.apps.googleusercontent.com"
+            clientId="1059448371288-vol44jdsvkfc0d1b96puhukpd35fv0c3.apps.googleusercontent.com"
             render={(renderProps) => (
               <button
                 onClick={renderProps.onClick}

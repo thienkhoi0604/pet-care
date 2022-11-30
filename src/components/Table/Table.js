@@ -15,6 +15,8 @@ import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
 import axios from "axios";
 import { useQuery } from "@tanstack/react-query";
+import BorderColorOutlinedIcon from "@mui/icons-material/BorderColorOutlined";
+import { Link } from "react-router-dom";
 
 function Row(props) {
   const { row } = props;
@@ -31,7 +33,6 @@ function Row(props) {
     },
   });
 
-  console.log("data", data);
   return (
     <React.Fragment>
       <TableRow sx={{ "& > *": { borderBottom: "unset" } }}>
@@ -47,7 +48,11 @@ function Row(props) {
         <TableCell component="th" scope="row">
           {row.name}
         </TableCell>
-        <TableCell align="right">{row["id_group"]}</TableCell>
+        <TableCell align="right">
+          <Link to={`/${row["id_group"]}`}>
+            <BorderColorOutlinedIcon />
+          </Link>
+        </TableCell>
       </TableRow>
       <TableRow>
         <TableCell style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={6}>
@@ -89,21 +94,22 @@ function Row(props) {
 
 export default function CollapsibleTable({ data }) {
   return (
-    <TableContainer component={Paper} className={classes["table-container"]}>
-      <Table aria-label="collapsible table">
-        <TableHead>
-          <TableRow>
-            <TableCell />
-            <TableCell>Name Group</TableCell>
-            <TableCell align="right">Amount of members</TableCell>
-          </TableRow>
-        </TableHead>
-        <TableBody>
-          {data.map((row, index) => (
-            <Row key={index} row={row} />
-          ))}
-        </TableBody>
-      </Table>
-    </TableContainer>
+    <>
+      <TableContainer component={Paper} className={classes["table-container"]}>
+        <Table aria-label="collapsible table">
+          <TableHead>
+            <TableRow>
+              <TableCell />
+              <TableCell align="left">Name Group</TableCell>
+            </TableRow>
+          </TableHead>
+          <TableBody>
+            {data.map((row, index) => (
+              <Row key={index} row={row} />
+            ))}
+          </TableBody>
+        </Table>
+      </TableContainer>
+    </>
   );
 }

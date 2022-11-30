@@ -1,14 +1,13 @@
 import classes from "./Home.module.css";
 import Button from "../../UI/Button/Button";
 import CollapsibleTable from "../../Table/Table";
-import CustomizedTables from "../../UserTable/UserTable";
 
 import axios from "axios";
 import { useQuery } from "@tanstack/react-query";
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 
-const HomePage = ({ usersList, user, onLogout }) => {
+const HomePage = ({ user, onLogout }) => {
   const [groupMember, setGroupMember] = useState([]);
   const [groupOwner, setGroupOwner] = useState([]);
 
@@ -23,7 +22,6 @@ const HomePage = ({ usersList, user, onLogout }) => {
 
   useEffect(() => {
     const splitGroup = () => {
-      console.log(data);
       if (data && Array.isArray(data)) {
         const member = data.filter((element) => {
           return element.role.trim() === "member";
@@ -50,10 +48,6 @@ const HomePage = ({ usersList, user, onLogout }) => {
     <div className={classes["homepage-container"]}>
       <h1>HOME PAGE</h1>
       <div>
-        <div>
-          <h3>List members</h3>
-          <CustomizedTables data={usersList} />
-        </div>
         {groupMember.length !== 0 ? (
           <div>
             <h3>Group you are member</h3>
