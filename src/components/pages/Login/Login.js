@@ -84,7 +84,7 @@ const Login = ({ getUser, onLogin, className }) => {
       localStorage.clear();
       localStorage.setItem("user", username);
     } else {
-      console.log("Something went wrong");
+      alert("Username or password incorrect");
     }
   };
 

@@ -101,7 +101,7 @@ export default function CollapsibleTable() {
         <TableHead>
           <TableRow>
             <TableCell />
-            <TableCell align="left">Name Group</TableCell>
+            <TableCell align="left">Member group</TableCell>
             <TableCell align="right"></TableCell>
           </TableRow>
         </TableHead>
